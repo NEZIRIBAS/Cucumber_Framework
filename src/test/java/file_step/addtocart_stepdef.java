@@ -1,16 +1,15 @@
 package file_step;
 
-import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import Driver_Factory.code;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pages.AddToCart_ProductSelectPage;
+import pages.HomePage;
 
 public class addtocart_stepdef {
 	public WebDriver driver;
@@ -27,26 +26,25 @@ public class addtocart_stepdef {
 		driver.quit();
 	}
 
-	  @Given ("user on the product page for a cameras")
-	  public void user_on_the_product_page_for_a_laptop () {
-		  driver.findElement(By.xpath("//input[@type='text']")).click();
-	  }
+	public class AddToCart {
 
-	  @And("user selects the items")
-	  public void user_selects_the_items () {
-		  Assert.assertTrue(driver.findElement(By.linkText("Nikon D300")).isDisplayed());
-		  
-	  }
-	  
-	  @When("user clicks the add to cart button")
-	  public void user_clicks_the_add_to_cart_button () {
-		  driver.findElement(By.xpath("//button[@id='button-cart']")).click();
-	  }
-	  
-	  @Then("user should see a notification that says cameras added to cart")
-	  public void user_should_see_a_notification_that_says_laptop_added_to_cart () {
-		  driver.findElement(By.xpath("//span[@id='cart-total']")).click();
-		  
-	  }
-
+		public WebDriver driver;
+		
+		@Given("User navigates to add to product page")
+		public void User_navigates_to_add_to_product_page() {
+			 driver =code.getDriver();
+			 
+		}
+		@When("User clicks on add to cart button to navigate product page")
+		public void  User_clicks_on_add_to_cart_button() {
+			HomePage homepage = new HomePage(driver);
+			homepage.ClickOnLaptopNotebook();
+		}
+		@And("User clicks on add to cart")
+		public void  User_clicks_on_add_to_cart() {
+			AddToCart_ProductSelectPage productselect = new AddToCart_ProductSelectPage(driver);
+			productselect.ProductSelect();
+		}
+		
+	}
 }
